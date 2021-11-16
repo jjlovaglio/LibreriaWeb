@@ -5,10 +5,15 @@
  */
 package egg.ej1.libreria.repositorios;
 
+import egg.ej1.libreria.entidades.Editorial;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 /**
  *
  * @author josejlovaglio
  */
-public class EditorialRepositorio {
+@Repository
+public interface EditorialRepositorio extends JpaRepository<Editorial, String> {
     
 }

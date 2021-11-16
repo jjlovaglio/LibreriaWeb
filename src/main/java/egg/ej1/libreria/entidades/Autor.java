@@ -5,11 +5,16 @@
  */
 package egg.ej1.libreria.entidades;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  *
  * @author josejlovaglio
  */
+@Entity
 public class Autor {
+    @Id
     String id;
     String nombre;
     Boolean alta;

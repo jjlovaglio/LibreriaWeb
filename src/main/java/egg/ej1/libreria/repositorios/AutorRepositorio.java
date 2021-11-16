@@ -5,10 +5,15 @@
  */
 package egg.ej1.libreria.repositorios;
 
+import egg.ej1.libreria.entidades.Autor;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 /**
  *
  * @author josejlovaglio
  */
-public class AutorRepositorio {
+@Repository
+public interface AutorRepositorio extends JpaRepository <Autor, String> {
     
 }

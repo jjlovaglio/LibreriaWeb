@@ -5,12 +5,29 @@
  */
 package egg.ej1.libreria.entidades;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  *
  * @author josejlovaglio
+ * 
+ * La entidad libro modela los libros que están disponibles en la biblioteca
+ * para ser prestados. En esta entidad, el atributo “ejemplares” contiene 
+ * la cantidad total de ejemplares de ese libro, mientras que el atributo
+ * “prestados” contiene cuántos de esos ejemplares se encuentran prestados 
+ * en este momento y el atributo “restantes” tiene cuando libros nos quedan
+ * para prestar. El repositorio que persiste a esta entidad (LibroRepositorio)
+ * debe contener los métodos necesarios para guardar/actualizar libros en la
+ * base de datos, realizar consultas o dar de baja según corresponda.
+ * 
+ * 
+ * 
  */
+
+@Entity
 public class Libro {
-    
+    @Id
     String id;
     Long isbn;
     String titulo;
