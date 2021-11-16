@@ -6,7 +6,10 @@
 package egg.ej1.libreria.entidades;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -28,6 +31,8 @@ import javax.persistence.Id;
 @Entity
 public class Libro {
     @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")        
     String id;
     Long isbn;
     String titulo;
@@ -36,7 +41,9 @@ public class Libro {
     Integer ejemplaresPrestados;
     Integer ejemplaresRestantes;
     Boolean alta;
+    @ManyToOne
     Autor autor;
+    @ManyToOne
     Editorial editorial;
 
     public String getId() {
