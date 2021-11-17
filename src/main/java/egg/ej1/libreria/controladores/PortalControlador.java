@@ -19,7 +19,5 @@ public class PortalControlador {
 
     
 
-    //todo: implementar spring security para que deje de pedir password
-    
     
 }
