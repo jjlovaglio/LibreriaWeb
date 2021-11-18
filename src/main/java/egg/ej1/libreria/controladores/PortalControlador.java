@@ -1,7 +1,23 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+
+ok-todo: poder cargar datos de un libro
+todo: poder modificar datos de un libro
+todo: poder listar libros
+todo: poder dar de baja libros
+
+ok-todo: poder cargar datos de un autor
+todo: poder modificar datos de un autor
+todo: poder listar autores
+todo: poder dar de baja autores
+
+ok-todo: poder cargar datos de  editorial
+todo: poder modificar datos de  editorial
+todo: poder listar editoriales
+todo: poder dar de baja editoriales
+
+todo: manejo de excepciones como en el tinder de mascotas
+todo: devolver feedback de errores al usuario
+
  */
 package egg.ej1.libreria.controladores;
 
@@ -16,7 +32,7 @@ public class PortalControlador {
         return "index.html";
     }
     
-
+    
     
 
     
