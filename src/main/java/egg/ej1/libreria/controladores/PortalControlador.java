@@ -1,18 +1,18 @@
 /*
 
 ok-todo: poder cargar datos de un libro
+ok-todo: poder listar libros
 todo: poder modificar datos de un libro
-todo: poder listar libros
 todo: poder dar de baja libros
 
 ok-todo: poder cargar datos de un autor
 todo: poder modificar datos de un autor
-todo: poder listar autores
+ok-todo: poder listar autores
 todo: poder dar de baja autores
 
 ok-todo: poder cargar datos de  editorial
 todo: poder modificar datos de  editorial
-todo: poder listar editoriales
+ok-todo: poder listar editoriales
 todo: poder dar de baja editoriales
 
 todo: manejo de excepciones como en el tinder de mascotas

@@ -46,16 +46,22 @@
                     <div class="row">
                         <table class="table text-center">
                             <tr>
-                                <th>Nombre</th>
+                                <th>isbn</th>
+                                <th>Titulo</th>
+                                <th>Autor</th>
+                                <th>Editorial</th>
                                 <th></th>
+
                             </tr>
-                            <tr>
-                                <td>Alfreds Futterkiste</td>
-                                <td>Maria Anders</td>
-                            </tr>
-                            <tr>
-                                <td>Centro comercial Moctezuma</td>
-                                <td>Francisco Chang</td>
+                            <tr th:each="libro : ${libros}">
+                                <td th:text="${libro.isbn}"></td>
+                                <td th:text="${libro.titulo}"></td>
+                                <td th:text="${libro.autor.nombre}"></td>
+                                <td th:text="${libro.editorial.nombre}"></td>
+                                <td>
+                                    <a  th:href="@{/libros/(id=__${libro.id}__,accion=Editar)}">Editar</a>
+                                    <a  th:href="@{/libros/(id=__${libro.id}__,accion=Eliminar)}">Eliminar</a>
+                                </td>
                             </tr>
                         </table>
 

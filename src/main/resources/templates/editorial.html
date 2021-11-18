@@ -47,16 +47,18 @@
                         <table class="table text-center">
                             <tr>
                                 <th>Nombre</th>
+                                <th>Alta</th>
                                 <th></th>
                             </tr>
-                            <tr>
-                                <td>Alfreds Futterkiste</td>
-                                <td>Maria Anders</td>
+                            <tr th:each="editorial: ${editoriales}">
+                                <td th:text="${editorial.nombre}"></td>
+                                <td th:text="${editorial.alta}"></td>
+                                     <td>
+                                    <a  th:href="@{/editoriales/(id=__${editorial.id}__,accion=Editar)}">Editar</a>
+                                    <a  th:href="@{/editoriales/(id=__${editorial.id}__,accion=Eliminar)}">Eliminar</a>
+                                </td>
                             </tr>
-                            <tr>
-                                <td>Centro comercial Moctezuma</td>
-                                <td>Francisco Chang</td>
-                            </tr>
+                      
                         </table>
 
                     </div>

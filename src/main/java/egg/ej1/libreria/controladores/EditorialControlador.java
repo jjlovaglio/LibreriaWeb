@@ -5,7 +5,10 @@
  */
 package egg.ej1.libreria.controladores;
 
+import egg.ej1.libreria.entidades.Editorial;
+import egg.ej1.libreria.repositorios.EditorialRepositorio;
 import egg.ej1.libreria.servicios.EditorialServicio;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,11 +28,17 @@ public class EditorialControlador {
     @Autowired
     EditorialServicio editorialServicio;
     
+    
+    @Autowired
+    EditorialRepositorio editorialRepositorio;
+    
         @GetMapping("/")
     public String listarEditoriales(
             ModelMap model) {
 
-
+        List<Editorial> editoriales = editorialRepositorio.findAll();
+        model.put("editoriales", editoriales);
+        
         return "editorial.html";
     }
     

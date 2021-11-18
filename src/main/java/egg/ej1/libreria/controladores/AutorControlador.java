@@ -5,7 +5,10 @@
  */
 package egg.ej1.libreria.controladores;
 
+import egg.ej1.libreria.entidades.Autor;
+import egg.ej1.libreria.repositorios.AutorRepositorio;
 import egg.ej1.libreria.servicios.AutorServicio;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,10 +28,15 @@ public class AutorControlador {
     @Autowired
     AutorServicio autorServicio;
     
+    @Autowired
+    AutorRepositorio autorRepositorio;
+    
     @GetMapping("/")
     public String listarAutores(
             ModelMap model) {
 
+        List<Autor> autores = autorRepositorio.findAll();
+        model.put("autores", autores);
 
         return "autor.html";
     }

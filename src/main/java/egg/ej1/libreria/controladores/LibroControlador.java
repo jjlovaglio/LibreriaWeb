@@ -7,8 +7,10 @@ package egg.ej1.libreria.controladores;
 
 import egg.ej1.libreria.entidades.Autor;
 import egg.ej1.libreria.entidades.Editorial;
+import egg.ej1.libreria.entidades.Libro;
 import egg.ej1.libreria.repositorios.AutorRepositorio;
 import egg.ej1.libreria.repositorios.EditorialRepositorio;
+import egg.ej1.libreria.repositorios.LibroRepositorio;
 import egg.ej1.libreria.servicios.LibroServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +44,15 @@ public class LibroControlador {
     @Autowired
     private EditorialRepositorio editorialRepositorio;
     
+    @Autowired
+    private LibroRepositorio libroRepositorio;
+    
     @GetMapping("/")
     public String listarLibros(
         ModelMap model) {
+        
+        List<Libro> libros = libroRepositorio.findAll();
+        model.put("libros", libros);
         
         List<Autor> autores = autorRepositorio.findAll();
         model.put("autores", autores);
