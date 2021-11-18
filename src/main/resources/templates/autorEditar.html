@@ -37,7 +37,7 @@
             <br/>
             <br/>
             <div class="row">
-                <h2 class="text-center">Editoriales</h2>
+                <h2 class="text-center">Autores</h2>
             </div>
             <br/>
             <div class="row">
@@ -50,29 +50,29 @@
                                 <th>Alta</th>
                                 <th></th>
                             </tr>
-                            <tr th:each="editorial: ${editoriales}">
-                                <td th:text="${editorial.nombre}"></td>
-                                <td th:text="${editorial.alta}"></td>
-                                     <td>
-                                    <a  th:href="@{/editoriales/__${editorial.id}__(accion=Editar)}">Editar</a>
-                                    <a  th:href="@{/editoriales/(id=__${editorial.id}__,accion=Eliminar)}">Eliminar</a>
+                            <tr th:each="autor : ${autores}">
+                                <td th:text="${autor.nombre}"></td>
+                                <td th:text="${autor.alta}"></td>
+
+                                <td>
+                                    <a  th:href="@{/autores/(id=__${autor.id}__,accion=Editar)}">Editar</a>
+                                    <a  th:href="@{/autores/(id=__${autor.id}__,accion=Eliminar)}">Eliminar</a>
                                 </td>
                             </tr>
-                      
                         </table>
 
                     </div>
                     </br>
                     </br>
                     <div class="row">
-                        <h3 class="text-center">Cargar Editorial</h3>
-                        <form th:action="@{/editoriales/}" method="POST" >
-                
+                        <h3 class="text-center">Editar Autor</h3>
+                        <form th:action="@{/autores/}" method="POST" >
+
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre de la Editorial</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre">
+                                <label for="nombre" class="form-label">Nombre del Autor</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" th:value="${autor.nombre}">
                             </div>
-       
+
 
                             <button type="submit" class="btn btn-outline-primary">Cargar</button>
                         </form>

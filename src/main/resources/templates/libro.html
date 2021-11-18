@@ -59,8 +59,8 @@
                                 <td th:text="${libro.autor.nombre}"></td>
                                 <td th:text="${libro.editorial.nombre}"></td>
                                 <td>
-                                    <a  th:href="@{/libros/(id=__${libro.id}__,accion=Editar)}">Editar</a>
-                                    <a  th:href="@{/libros/(id=__${libro.id}__,accion=Eliminar)}">Eliminar</a>
+                                    <a  th:href="@{/libros/__${libro.id}__(accion=Editar)}">Editar</a>
+                                    <a  th:href="@{/libros/__${libro.id}__(accion=Eliminar)}">Eliminar</a>
                                 </td>
                             </tr>
                         </table>

@@ -37,7 +37,7 @@
             <br/>
             <br/>
             <div class="row">
-                <h2 class="text-center">Editoriales</h2>
+                <h2 class="text-center">Libros</h2>
             </div>
             <br/>
             <div class="row">
@@ -46,34 +46,51 @@
                     <div class="row">
                         <table class="table text-center">
                             <tr>
-                                <th>Nombre</th>
-                                <th>Alta</th>
+                                <th>isbn</th>
+                                <th>Titulo</th>
+                                <th>Autor</th>
+                                <th>Editorial</th>
                                 <th></th>
+
                             </tr>
-                            <tr th:each="editorial: ${editoriales}">
-                                <td th:text="${editorial.nombre}"></td>
-                                <td th:text="${editorial.alta}"></td>
-                                     <td>
-                                    <a  th:href="@{/editoriales/__${editorial.id}__(accion=Editar)}">Editar</a>
-                                    <a  th:href="@{/editoriales/(id=__${editorial.id}__,accion=Eliminar)}">Eliminar</a>
+                            <tr th:each="libro : ${libros}">
+                                <td th:text="${libro.isbn}"></td>
+                                <td th:text="${libro.titulo}"></td>
+                                <td th:text="${libro.autor.nombre}"></td>
+                                <td th:text="${libro.editorial.nombre}"></td>
+                                <td>
+                                    <a  th:href="@{/libros/(id=__${libro.id}__,accion=Editar)}">Editar</a>
+                                    <a  th:href="@{/libros/(id=__${libro.id}__,accion=Eliminar)}">Eliminar</a>
                                 </td>
                             </tr>
-                      
                         </table>
 
                     </div>
                     </br>
                     </br>
                     <div class="row">
-                        <h3 class="text-center">Cargar Editorial</h3>
-                        <form th:action="@{/editoriales/}" method="POST" >
-                
+                        <h3 class="text-center">Editar Libro</h3>
+                        <form th:action="@{/libros/}" method="POST" >
+                            
+                            <input type="hidden" name="${libro.id}"/>
+                            
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre de la Editorial</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre">
+                                <label for="isbn" class="form-label">isbn</label>
+                                <input type="number" class="form-control" id="isbn" min="0" name="isbn" th:value="${libro.isbn}">
                             </div>
-       
-
+                            <div class="mb-3">
+                                <label for="titulo" class="form-label">Titulo</label>
+                                <input type="text" class="form-control" id="titulo" name="titulo" th:value="${libro.titulo}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="anio" class="form-label">Año</label>
+                                <input type="number" class="form-control" id="anio" min="1600" max="2021" name="anio" th:value="${libro.anio}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="ejemplares" class="form-label">Ejemplares</label>
+                                <input type="number" class="form-control" id="ejemplares" min="1" name="ejemplares" th:value="${libro.ejemplares}">
+                            </div>
+  
                             <button type="submit" class="btn btn-outline-primary">Cargar</button>
                         </form>
 
