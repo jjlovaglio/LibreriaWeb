@@ -62,33 +62,33 @@
                     </br>
                     <div class="row">
                         <h3 class="text-center">Cargar Libro</h3>
-                        <form >
+                        <form th:action="@{/libros/}" method="POST" >
                             <div class="mb-3">
                                 <label for="isbn" class="form-label">isbn</label>
-                                <input type="number" class="form-control" id="isbn" min="0" >
+                                <input type="number" class="form-control" id="isbn" min="0" name="isbn">
                             </div>
                             <div class="mb-3">
                                 <label for="titulo" class="form-label">Titulo</label>
-                                <input type="text" class="form-control" id="titulo">
+                                <input type="text" class="form-control" id="titulo" name="titulo">
                             </div>
                             <div class="mb-3">
                                 <label for="anio" class="form-label">Año</label>
-                                <input type="number" class="form-control" id="anio" min="1600" max="2021">
+                                <input type="number" class="form-control" id="anio" min="1600" max="2021" name="anio">
                             </div>
                             <div class="mb-3">
                                 <label for="ejemplares" class="form-label">Ejemplares</label>
-                                <input type="number" class="form-control" id="ejemplares" min="1" >
+                                <input type="number" class="form-control" id="ejemplares" min="1" name="ejemplares">
                             </div>
                             <div class="mb-3">
                                 <label for="idAutor">Autor</label>
-                                <select class="form-control" id="idAutor">
+                                <select class="form-control" id="idAutor" name="idAutor">
                                     <option th:each="autor: ${autores}" th:value="${autor.id}" th:text="${autor.nombre}"></option>
 
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="idEditorial">Editorial</label>
-                                <select class="form-control" id="idEditorial">
+                                <select class="form-control" id="idEditorial" name="idEditorial">
                                     <option th:each="editorial: ${editoriales}" th:value="${editorial.id}" th:text="${editorial.nombre}"></option>
 
                                 </select>

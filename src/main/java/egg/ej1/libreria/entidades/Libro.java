@@ -125,6 +125,11 @@ public class Libro {
     public void setEditorial(Editorial editorial) {
         this.editorial = editorial;
     }
+
+    @Override
+    public String toString() {
+        return "Libro{" + "id=" + id + ", isbn=" + isbn + ", titulo=" + titulo + ", anio=" + anio + ", ejemplares=" + ejemplares + ", ejemplaresPrestados=" + ejemplaresPrestados + ", ejemplaresRestantes=" + ejemplaresRestantes + ", alta=" + alta + ", autor=" + autor + ", editorial=" + editorial + '}';
+    }
     
     
     
