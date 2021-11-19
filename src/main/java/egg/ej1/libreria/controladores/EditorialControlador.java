@@ -5,7 +5,6 @@
  */
 package egg.ej1.libreria.controladores;
 
-import egg.ej1.libreria.entidades.Autor;
 import egg.ej1.libreria.entidades.Editorial;
 import egg.ej1.libreria.repositorios.EditorialRepositorio;
 import egg.ej1.libreria.servicios.EditorialServicio;
@@ -44,7 +43,7 @@ public class EditorialControlador {
     }
 
     @PostMapping("/")
-    public String cargarLibro(
+    public String crearEditorial(
             @RequestParam String nombre,
             ModelMap model) {
 
@@ -54,9 +53,9 @@ public class EditorialControlador {
         return "libro.html";
     }
 
-    @GetMapping("/{idAutor}")
-    public String editarAutor(
-            @PathVariable("idAutor") String id,
+    @GetMapping("/{idEditorial}")
+    public String editarEditorial(
+            @PathVariable("idEditorial") String id,
             ModelMap model) {
 
         List<Editorial> editoriales = editorialRepositorio.findAll();
@@ -68,4 +67,25 @@ public class EditorialControlador {
         return "editorialEditar.html";
     }
 
+        @PostMapping("/{idEditorial}")
+    public String actualizarEditorial(
+            @PathVariable("idEditorial") String id,
+            @RequestParam String nombre,
+            ModelMap model
+    ) {
+
+        editorialServicio.modificar(id, nombre);
+
+        List<Editorial> editoriales = editorialRepositorio.findAll();
+        model.put("editoriales", editoriales);
+        
+        Editorial e = editorialRepositorio.getById(id);
+
+        model.put("editorial", e);
+        
+        return "editorialEditar.html";
+
+    }
+    
+    
 }

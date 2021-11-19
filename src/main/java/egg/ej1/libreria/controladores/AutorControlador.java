@@ -6,7 +6,6 @@
 package egg.ej1.libreria.controladores;
 
 import egg.ej1.libreria.entidades.Autor;
-import egg.ej1.libreria.entidades.Libro;
 import egg.ej1.libreria.repositorios.AutorRepositorio;
 import egg.ej1.libreria.servicios.AutorServicio;
 import java.util.List;
@@ -29,10 +28,10 @@ public class AutorControlador {
 
     @Autowired
     AutorServicio autorServicio;
-    
+
     @Autowired
     AutorRepositorio autorRepositorio;
-    
+
     @GetMapping("/")
     public String listarAutores(
             ModelMap model) {
@@ -47,30 +46,45 @@ public class AutorControlador {
     public String cargarLibro(
             @RequestParam String nombre,
             ModelMap model) {
-        
-        
+
         autorServicio.cargar(
                 nombre);
-        
-        
 
         return "libro.html";
-    }  
-    
-        @GetMapping("/{idAutor}")
+    }
+
+    @GetMapping("/{idAutor}")
     public String editarAutor(
             @PathVariable("idAutor") String id,
             ModelMap model) {
-    
+
+        List<Autor> autores = autorRepositorio.findAll();
+        model.put("autores", autores);
+
+        Autor a = autorRepositorio.getById(id);
+        model.put("autor", a);
+
+        return "autorEditar.html";
+    }
+
+    @PostMapping("/{idAutor}")
+    public String actualizarAutor(
+            @PathVariable("idAutor") String id,
+            @RequestParam String nombre,
+            ModelMap model
+    ) {
+
+        autorServicio.modificar(id, nombre);
+
         List<Autor> autores = autorRepositorio.findAll();
         model.put("autores", autores);
         
         Autor a = autorRepositorio.getById(id);
+
         model.put("autor", a);
         
-        
         return "autorEditar.html";
+
     }
-    
     
 }

@@ -53,12 +53,12 @@
                             <tr th:each="editorial: ${editoriales}">
                                 <td th:text="${editorial.nombre}"></td>
                                 <td th:text="${editorial.alta}"></td>
-                                     <td>
-                                    <a  th:href="@{/editoriales/(id=__${editorial.id}__,accion=Editar)}">Editar</a>
-                                    <a  th:href="@{/editoriales/(id=__${editorial.id}__,accion=Eliminar)}">Eliminar</a>
+                                <td>
+                                    <a  th:href="@{/editoriales/__${editorial.id}__(accion=Editar)}">Editar</a>
+                                    <a  th:href="@{/editoriales/__${editorial.id}__(accion=Eliminar)}">Eliminar</a>
                                 </td>
                             </tr>
-                      
+
                         </table>
 
                     </div>
@@ -66,13 +66,13 @@
                     </br>
                     <div class="row">
                         <h3 class="text-center">Editar Editorial</h3>
-                        <form th:action="@{/editoriales/}" method="POST" >
-                
+                        <form th:action="@{/editoriales/__${editorial != null ? editorial.id : 'editorial is null'}__(accion=Editar)}" method="POST" >
+
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre de la Editorial</label>
                                 <input type="text" class="form-control" id="nombre" name="nombre" th:value="${editorial.nombre}">
                             </div>
-       
+
 
                             <button type="submit" class="btn btn-outline-primary">Cargar</button>
                         </form>

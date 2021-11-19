@@ -11,6 +11,7 @@ import egg.ej1.libreria.entidades.Libro;
 import egg.ej1.libreria.repositorios.AutorRepositorio;
 import egg.ej1.libreria.repositorios.EditorialRepositorio;
 import egg.ej1.libreria.repositorios.LibroRepositorio;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,41 +19,41 @@ import org.springframework.stereotype.Service;
 /**
  *
  * @author josejlovaglio
- * 
- * Esta clase tiene la responsabilidad de llevar adelante las funcionalidades 
- * necesarias para administrar libros (consulta, creación, modificación 
- * y dar de baja).
- * 
+ *
+ * Esta clase tiene la responsabilidad de llevar adelante las funcionalidades
+ * necesarias para administrar libros (consulta, creación, modificación y dar de
+ * baja).
+ *
  */
 @Service
 public class LibroServicio {
-    
+
     @Autowired
     private LibroRepositorio libroRepositorio;
-    
+
     @Autowired
     private AutorRepositorio autorRepositorio;
-    
+
     @Autowired
     private EditorialRepositorio editorialRepositorio;
-    
+
     @Transactional
     public void cargar(
-        String isbn,
-        String titulo,
-        String anio,
-        String ejemplares,
-        String idAutor,
-        String idEditorial
-        ) {
-        
+            String isbn,
+            String titulo,
+            String anio,
+            String ejemplares,
+            String idAutor,
+            String idEditorial
+    ) {
+
         Autor autor = autorRepositorio.getById(idAutor);
         Editorial editorial = editorialRepositorio.getById(idEditorial);
-        
+
         Long lIsbn = Long.parseLong(isbn);
         Integer iAnio = Integer.parseInt(anio);
         Integer iEjemplares = Integer.parseInt(ejemplares);
-        
+
         Libro libro = new Libro();
         libro.setAlta(Boolean.TRUE);
         libro.setIsbn(lIsbn);
@@ -63,13 +64,54 @@ public class LibroServicio {
         libro.setEjemplaresRestantes(iEjemplares);
         libro.setAutor(autor);
         libro.setEditorial(editorial);
-        
+
         // sanity check
+        System.out.println("Carga Libro: ");
         System.out.println(libro);
-        
+
         libroRepositorio.save(libro);
-        
+
     }
-    
-    
+
+    @Transactional
+    public void modificar(
+            String idLibro,
+            String isbn,
+            String titulo,
+            String anio,
+            String ejemplares
+
+    ) {
+
+        // validaciones aquí
+        Optional<Libro> respuesta = libroRepositorio.findById(idLibro);
+
+        if (respuesta.isPresent()) {
+
+            Libro l = respuesta.get();
+
+
+            Long lIsbn = Long.parseLong(isbn);
+            Integer iAnio = Integer.parseInt(anio);
+            Integer iEjemplares = Integer.parseInt(ejemplares);
+
+            l.setIsbn(lIsbn);
+            l.setTitulo(titulo);
+            l.setAnio(iAnio);
+            l.setEjemplares(iEjemplares);
+ 
+                    
+            // sanity check
+            System.out.println("Actualizacion Libro");
+            System.out.println(l);
+            
+            libroRepositorio.save(l);
+            
+            
+            
+        } else {
+            System.out.println("Error: No existe un libro con el id solicitado");
+        }
+
+    }
 }

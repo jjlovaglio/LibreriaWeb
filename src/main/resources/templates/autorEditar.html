@@ -55,8 +55,8 @@
                                 <td th:text="${autor.alta}"></td>
 
                                 <td>
-                                    <a  th:href="@{/autores/(id=__${autor.id}__,accion=Editar)}">Editar</a>
-                                    <a  th:href="@{/autores/(id=__${autor.id}__,accion=Eliminar)}">Eliminar</a>
+                                    <a  th:href="@{/autores/__${autor.id}__(accion=Editar)}">Editar</a>
+                                    <a  th:href="@{/autores/__${autor.id}__(accion=Eliminar)}">Eliminar</a>
                                 </td>
                             </tr>
                         </table>
@@ -66,15 +66,17 @@
                     </br>
                     <div class="row">
                         <h3 class="text-center">Editar Autor</h3>
-                        <form th:action="@{/autores/}" method="POST" >
+                        <form th:action="@{/autores/__${autor != null ? autor.id : 'autor is null' }__(accion=Editar)}" method="POST" >
+                            
+                            <input type="hidden" name="${autor}"/>
 
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre del Autor</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" th:value="${autor.nombre}">
+                                <input type="text" class="form-control" id="nombre" name="nombre" th:value="${autor != null ? autor.nombre : 'autor is null' }">
                             </div>
 
 
-                            <button type="submit" class="btn btn-outline-primary">Cargar</button>
+                            <button type="submit" class="btn btn-outline-primary">Editar</button>
                         </form>
 
 

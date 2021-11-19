@@ -7,6 +7,7 @@ package egg.ej1.libreria.servicios;
 
 import egg.ej1.libreria.entidades.Autor;
 import egg.ej1.libreria.repositorios.AutorRepositorio;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,4 +35,30 @@ public class AutorServicio {
         
         
     }
+    
+    @Transactional
+    public void modificar(
+            String idAutor,
+            String nombre
+            ) {
+        
+        // validaciones aquí
+        
+        Optional<Autor> respuesta = autorRepositorio.findById(idAutor);
+        
+        if(respuesta.isPresent()) {
+            
+            Autor autor = respuesta.get();
+            autor.setNombre(nombre);
+            
+            autorRepositorio.save(autor);
+        } else {
+            System.out.println("Error: No existe un Autor con el id solicitado");
+        }
+        
+        
+    }
+    
+    
+    
 }

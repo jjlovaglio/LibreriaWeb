@@ -38,32 +38,41 @@ public class LibroControlador {
 
     @Autowired
     private LibroServicio libroServicio;
-    
+
     @Autowired
     private AutorRepositorio autorRepositorio;
-    
+
     @Autowired
     private EditorialRepositorio editorialRepositorio;
-    
+
     @Autowired
     private LibroRepositorio libroRepositorio;
-    
+
     @GetMapping("/")
     public String listarLibros(
-        ModelMap model) {
-        
+            ModelMap model) {
+
         List<Libro> libros = libroRepositorio.findAll();
         model.put("libros", libros);
-        
+
         List<Autor> autores = autorRepositorio.findAll();
         model.put("autores", autores);
-        
+
         List<Editorial> editoriales = editorialRepositorio.findAll();
         model.put("editoriales", editoriales);
-        
+
         return "libro.html";
     }
 
+    @GetMapping("/practicaBootstrap")
+    public String practicaBS() {
+        
+        
+        return "practicaBS.html";
+    }
+    
+    
+    
     @PostMapping("/")
     public String cargarLibro(
             @RequestParam String isbn,
@@ -73,8 +82,7 @@ public class LibroControlador {
             @RequestParam String idAutor,
             @RequestParam String idEditorial,
             ModelMap model) {
-        
-        
+
         libroServicio.cargar(
                 isbn,
                 titulo,
@@ -82,29 +90,52 @@ public class LibroControlador {
                 ejemplares,
                 idAutor,
                 idEditorial);
-        
-        
 
         return "libro.html";
     }
-    
+
     @GetMapping("/{idLibro}")
     public String editarLibro(
             @PathVariable("idLibro") String id,
             ModelMap model) {
-    
+
         List<Libro> libros = libroRepositorio.findAll();
         model.put("libros", libros);
-        
+
         Libro l = libroRepositorio.getById(id);
         model.put("libro", l);
-        
-        
+
         return "libroEditar.html";
     }
-            
-    
-    
-    
-    
+
+    @PostMapping("/{idLibro}")
+    public String actualizarLibro(
+            @PathVariable("idLibro") String idLibro,
+            @RequestParam String isbn,
+            @RequestParam String titulo,
+            @RequestParam String anio,
+            @RequestParam String ejemplares,
+
+            ModelMap model
+    ) {
+
+        libroServicio.modificar(
+                idLibro, 
+                isbn,
+                titulo,
+                anio,
+                ejemplares
+             );
+
+        List<Libro> libros = libroRepositorio.findAll();
+        model.put("libros", libros);
+
+        Libro l = libroRepositorio.getById(idLibro);
+
+        model.put("libro", l);
+
+        return "libroEditar.html";
+
+    }
+
 }
