@@ -64,15 +64,6 @@ public class LibroControlador {
         return "libro.html";
     }
 
-    @GetMapping("/practicaBootstrap")
-    public String practicaBS() {
-        
-        
-        return "practicaBS.html";
-    }
-    
-    
-    
     @PostMapping("/")
     public String cargarLibro(
             @RequestParam String isbn,
@@ -90,6 +81,13 @@ public class LibroControlador {
                 ejemplares,
                 idAutor,
                 idEditorial);
+
+        List<Libro> libros = libroRepositorio.findAll();
+        model.put("libros", libros);
+        List<Autor> autores = autorRepositorio.findAll();
+        model.put("autores", autores);
+        List<Editorial> editoriales = editorialRepositorio.findAll();
+        model.put("editoriales", editoriales);
 
         return "libro.html";
     }
@@ -115,17 +113,16 @@ public class LibroControlador {
             @RequestParam String titulo,
             @RequestParam String anio,
             @RequestParam String ejemplares,
-
             ModelMap model
     ) {
 
         libroServicio.modificar(
-                idLibro, 
+                idLibro,
                 isbn,
                 titulo,
                 anio,
                 ejemplares
-             );
+        );
 
         List<Libro> libros = libroRepositorio.findAll();
         model.put("libros", libros);

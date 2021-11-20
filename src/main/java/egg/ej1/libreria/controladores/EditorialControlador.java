@@ -49,8 +49,14 @@ public class EditorialControlador {
 
         editorialServicio.cargar(
                 nombre);
+        
+        List<Editorial> editoriales = editorialRepositorio.findAll();
+        model.put("editoriales", editoriales);
+        
+        
+        
 
-        return "libro.html";
+        return "editorial.html";
     }
 
     @GetMapping("/{idEditorial}")

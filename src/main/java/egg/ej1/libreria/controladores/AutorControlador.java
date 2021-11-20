@@ -43,14 +43,17 @@ public class AutorControlador {
     }
 
     @PostMapping("/")
-    public String cargarLibro(
+    public String cargarAutor(
             @RequestParam String nombre,
             ModelMap model) {
 
         autorServicio.cargar(
                 nombre);
 
-        return "libro.html";
+        List<Autor> autores = autorRepositorio.findAll();
+        model.put("autores", autores);
+        
+        return "autor.html";
     }
 
     @GetMapping("/{idAutor}")
