@@ -47,12 +47,12 @@ public class LibroControlador {
 
     @Autowired
     private LibroRepositorio libroRepositorio;
-
+ 
     @GetMapping("/")
     public String listarLibros(
             ModelMap model) {
 
-        List<Libro> libros = libroRepositorio.findAll();
+        List<Libro> libros = libroRepositorio.findAllActive();
         model.put("libros", libros);
 
         List<Autor> autores = autorRepositorio.findAll();
@@ -91,13 +91,27 @@ public class LibroControlador {
 
         return "libro.html";
     }
+    
+    @GetMapping("/{idLibro}/eliminar")
+    public String eliminarLibro(
+        @PathVariable("idLibro") String id
+    ) {
+        Libro l = libroRepositorio.getById(id);
+        l.setAlta(Boolean.FALSE);
+        
+        libroRepositorio.save(l);
+        
+        return"redirect:/libros/";
+    
+    }
+    
 
-    @GetMapping("/{idLibro}")
+    @GetMapping("/{idLibro}/")
     public String editarLibro(
             @PathVariable("idLibro") String id,
             ModelMap model) {
 
-        List<Libro> libros = libroRepositorio.findAll();
+        List<Libro> libros = libroRepositorio.findAllActive();
         model.put("libros", libros);
 
         Libro l = libroRepositorio.getById(id);

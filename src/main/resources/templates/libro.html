@@ -60,7 +60,7 @@
                                 <td th:text="${libro.editorial.nombre}"></td>
                                 <td>
                                     <a  th:href="@{/libros/__${libro.id}__(accion=Editar)}">Editar</a>
-                                    <a  th:href="@{/libros/__${libro.id}__(accion=Eliminar)}">Eliminar</a>
+                                    <a  th:href="@{/libros/__${libro.id}__/eliminar}" >Eliminar</a>
                                 </td>
                             </tr>
                         </table>

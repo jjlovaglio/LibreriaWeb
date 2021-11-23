@@ -36,7 +36,7 @@ public class EditorialControlador {
     public String listarEditoriales(
             ModelMap model) {
 
-        List<Editorial> editoriales = editorialRepositorio.findAll();
+        List<Editorial> editoriales = editorialRepositorio.findAllActive();
         model.put("editoriales", editoriales);
 
         return "editorial.html";
@@ -49,12 +49,9 @@ public class EditorialControlador {
 
         editorialServicio.cargar(
                 nombre);
-        
+
         List<Editorial> editoriales = editorialRepositorio.findAll();
         model.put("editoriales", editoriales);
-        
-        
-        
 
         return "editorial.html";
     }
@@ -64,7 +61,7 @@ public class EditorialControlador {
             @PathVariable("idEditorial") String id,
             ModelMap model) {
 
-        List<Editorial> editoriales = editorialRepositorio.findAll();
+        List<Editorial> editoriales = editorialRepositorio.findAllActive();
         model.put("editoriales", editoriales);
 
         Editorial e = editorialRepositorio.getById(id);
@@ -73,7 +70,7 @@ public class EditorialControlador {
         return "editorialEditar.html";
     }
 
-        @PostMapping("/{idEditorial}")
+    @PostMapping("/{idEditorial}")
     public String actualizarEditorial(
             @PathVariable("idEditorial") String id,
             @RequestParam String nombre,
@@ -84,14 +81,26 @@ public class EditorialControlador {
 
         List<Editorial> editoriales = editorialRepositorio.findAll();
         model.put("editoriales", editoriales);
-        
+
         Editorial e = editorialRepositorio.getById(id);
 
         model.put("editorial", e);
-        
+
         return "editorialEditar.html";
 
     }
-    
-    
+
+    @GetMapping("/{idEditorial}/eliminar")
+    public String eliminarEditorial(
+            @PathVariable("idEditorial") String id
+    ) {
+        Editorial l = editorialRepositorio.getById(id);
+        l.setAlta(Boolean.FALSE);
+
+        editorialRepositorio.save(l);
+
+        return "redirect:/editoriales/";
+
+    }
+
 }

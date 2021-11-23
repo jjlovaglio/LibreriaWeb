@@ -6,7 +6,9 @@
 package egg.ej1.libreria.repositorios;
 
 import egg.ej1.libreria.entidades.Editorial;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,5 +17,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface EditorialRepositorio extends JpaRepository<Editorial, String> {
+    
+    @Query("SELECT c FROM Editorial c WHERE c.alta IS TRUE ")
+    public List<Editorial> findAllActive();
+    
     
 }

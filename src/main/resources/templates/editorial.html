@@ -55,7 +55,7 @@
                                 <td th:text="${editorial.alta}"></td>
                                      <td>
                                     <a  th:href="@{/editoriales/__${editorial.id}__(accion=Editar)}">Editar</a>
-                                    <a  th:href="@{/editoriales/(id=__${editorial.id}__,accion=Eliminar)}">Eliminar</a>
+                                    <a  th:href="@{/editoriales/__${editorial.id}__/eliminar}">Eliminar</a>
                                 </td>
                             </tr>
                       

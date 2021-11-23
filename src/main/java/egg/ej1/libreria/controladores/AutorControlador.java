@@ -36,7 +36,7 @@ public class AutorControlador {
     public String listarAutores(
             ModelMap model) {
 
-        List<Autor> autores = autorRepositorio.findAll();
+        List<Autor> autores = autorRepositorio.findAllActive();
         model.put("autores", autores);
 
         return "autor.html";
@@ -52,7 +52,7 @@ public class AutorControlador {
 
         List<Autor> autores = autorRepositorio.findAll();
         model.put("autores", autores);
-        
+
         return "autor.html";
     }
 
@@ -61,7 +61,7 @@ public class AutorControlador {
             @PathVariable("idAutor") String id,
             ModelMap model) {
 
-        List<Autor> autores = autorRepositorio.findAll();
+        List<Autor> autores = autorRepositorio.findAllActive();
         model.put("autores", autores);
 
         Autor a = autorRepositorio.getById(id);
@@ -81,13 +81,26 @@ public class AutorControlador {
 
         List<Autor> autores = autorRepositorio.findAll();
         model.put("autores", autores);
-        
+
         Autor a = autorRepositorio.getById(id);
 
         model.put("autor", a);
-        
+
         return "autorEditar.html";
 
     }
-    
+
+    @GetMapping("/{idAutor}/eliminar")
+    public String eliminarAutor(
+            @PathVariable("idAutor") String id
+    ) {
+        Autor l = autorRepositorio.getById(id);
+        l.setAlta(Boolean.FALSE);
+
+        autorRepositorio.save(l);
+
+        return "redirect:/autores/";
+
+    }
+
 }

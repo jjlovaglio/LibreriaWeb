@@ -1,8 +1,8 @@
 /*
 
-ok-todo: poder cargar datos de un libro
-ok-todo: poder listar libros
-ok-todo: poder modificar datos de un libro
+ok: poder cargar datos de un libro
+ok: poder listar libros
+ok: poder modificar datos de un libro
 todo: poder dar de baja libros
 
 ok-todo: poder cargar datos de un autor
