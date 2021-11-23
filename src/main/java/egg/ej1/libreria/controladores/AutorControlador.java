@@ -53,7 +53,7 @@ public class AutorControlador {
         List<Autor> autores = autorRepositorio.findAll();
         model.put("autores", autores);
 
-        return "autor.html";
+        return "redirect:";
     }
 
     @GetMapping("/{idAutor}")
@@ -86,7 +86,7 @@ public class AutorControlador {
 
         model.put("autor", a);
 
-        return "autorEditar.html";
+        return "redirect:";
 
     }
 

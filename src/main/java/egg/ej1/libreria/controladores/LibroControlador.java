@@ -89,7 +89,7 @@ public class LibroControlador {
         List<Editorial> editoriales = editorialRepositorio.findAll();
         model.put("editoriales", editoriales);
 
-        return "libro.html";
+        return "redirect:";
     }
     
     @GetMapping("/{idLibro}/eliminar")
@@ -106,7 +106,7 @@ public class LibroControlador {
     }
     
 
-    @GetMapping("/{idLibro}/")
+    @GetMapping("/{idLibro}")
     public String editarLibro(
             @PathVariable("idLibro") String id,
             ModelMap model) {
@@ -145,7 +145,7 @@ public class LibroControlador {
 
         model.put("libro", l);
 
-        return "libroEditar.html";
+        return "redirect:";
 
     }
 

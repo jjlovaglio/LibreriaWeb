@@ -53,7 +53,7 @@ public class EditorialControlador {
         List<Editorial> editoriales = editorialRepositorio.findAll();
         model.put("editoriales", editoriales);
 
-        return "editorial.html";
+        return "redirect:";
     }
 
     @GetMapping("/{idEditorial}")
@@ -86,7 +86,7 @@ public class EditorialControlador {
 
         model.put("editorial", e);
 
-        return "editorialEditar.html";
+        return "redirect:";
 
     }
 
