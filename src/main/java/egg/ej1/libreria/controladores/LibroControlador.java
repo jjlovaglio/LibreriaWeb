@@ -8,9 +8,9 @@ package egg.ej1.libreria.controladores;
 import egg.ej1.libreria.entidades.Autor;
 import egg.ej1.libreria.entidades.Editorial;
 import egg.ej1.libreria.entidades.Libro;
+import egg.ej1.libreria.excepciones.LibroExcepcion;
 import egg.ej1.libreria.repositorios.AutorRepositorio;
 import egg.ej1.libreria.repositorios.EditorialRepositorio;
-import egg.ej1.libreria.repositorios.LibroRepositorio;
 import egg.ej1.libreria.servicios.LibroServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,15 +45,19 @@ public class LibroControlador {
     @Autowired
     private EditorialRepositorio editorialRepositorio;
 
-    @Autowired
-    private LibroRepositorio libroRepositorio;
- 
     @GetMapping("/")
     public String listarLibros(
             ModelMap model) {
 
-        List<Libro> libros = libroRepositorio.findAllActive();
-        model.put("libros", libros);
+        try {
+            List<Libro> libros = libroServicio.listarActivos();
+            model.put("libros", libros);
+
+        } catch (LibroExcepcion e) {
+
+            model.put("error", "Error: " + e.getMessage());
+
+        }
 
         List<Autor> autores = autorRepositorio.findAll();
         model.put("autores", autores);
@@ -82,42 +86,53 @@ public class LibroControlador {
                 idAutor,
                 idEditorial);
 
-        List<Libro> libros = libroRepositorio.findAll();
-        model.put("libros", libros);
+        try {
+            List<Libro> libros = libroServicio.listarActivos();
+            model.put("libros", libros);
+        } catch (LibroExcepcion e) {
+
+            model.put("error", "Error:" + e.getMessage());
+        }
+
         List<Autor> autores = autorRepositorio.findAll();
         model.put("autores", autores);
         List<Editorial> editoriales = editorialRepositorio.findAll();
         model.put("editoriales", editoriales);
-
         return "redirect:";
+
     }
-    
+
     @GetMapping("/{idLibro}/eliminar")
     public String eliminarLibro(
-        @PathVariable("idLibro") String id
+            @PathVariable("idLibro") String id,
+            ModelMap model
     ) {
-        Libro l = libroRepositorio.getById(id);
-        l.setAlta(Boolean.FALSE);
-        
-        libroRepositorio.save(l);
-        
-        return"redirect:/libros/";
-    
+
+        try {
+            libroServicio.darBaja(id);
+            return "redirect: ";  // todo: arreglar esta ruta para que lleve a la pagina ppal
+        } catch (LibroExcepcion e) {
+            model.put("error", "Error:" + e.getMessage());
+        }
+        return "listarLibros(model)";
+
     }
-    
 
     @GetMapping("/{idLibro}")
     public String editarLibro(
             @PathVariable("idLibro") String id,
             ModelMap model) {
 
-        List<Libro> libros = libroRepositorio.findAllActive();
-        model.put("libros", libros);
-
-        Libro l = libroRepositorio.getById(id);
-        model.put("libro", l);
-
+        try {
+            List<Libro> libros = libroServicio.listarActivos();
+            model.put("libros", libros);
+            Libro l = libroServicio.buscarPorId(id);
+            model.put("libro", l);
+        } catch (LibroExcepcion e) {
+            model.put("error", "Error: " + e.getMessage());
+        }
         return "libroEditar.html";
+
     }
 
     @PostMapping("/{idLibro}")
@@ -138,12 +153,14 @@ public class LibroControlador {
                 ejemplares
         );
 
-        List<Libro> libros = libroRepositorio.findAll();
-        model.put("libros", libros);
-
-        Libro l = libroRepositorio.getById(idLibro);
-
-        model.put("libro", l);
+        try {
+            List<Libro> libros = libroServicio.listarActivos();
+            model.put("libros", libros);
+            Libro l = libroServicio.buscarPorId(idLibro);
+            model.put("libro", l);
+        } catch (LibroExcepcion e) {
+            model.put("error", "Error: " + e.getMessage());
+        }
 
         return "redirect:";
 

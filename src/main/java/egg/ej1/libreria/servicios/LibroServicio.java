@@ -8,9 +8,11 @@ package egg.ej1.libreria.servicios;
 import egg.ej1.libreria.entidades.Autor;
 import egg.ej1.libreria.entidades.Editorial;
 import egg.ej1.libreria.entidades.Libro;
+import egg.ej1.libreria.excepciones.LibroExcepcion;
 import egg.ej1.libreria.repositorios.AutorRepositorio;
 import egg.ej1.libreria.repositorios.EditorialRepositorio;
 import egg.ej1.libreria.repositorios.LibroRepositorio;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,56 @@ public class LibroServicio {
     @Autowired
     private EditorialRepositorio editorialRepositorio;
 
+    @Transactional
+    public List<Libro> listarTodos() throws LibroExcepcion {
+        
+        try {
+            return libroRepositorio.findAll();
+        } catch (Exception e) {
+            throw new LibroExcepcion("Hubo un problema para traer todos los libros.");
+        }
+    
+    }
+    
+    @Transactional
+    public List<Libro> listarActivos() throws LibroExcepcion {
+        
+        try {         
+            return libroRepositorio.findAllActive();
+        } catch (Exception e) {
+            throw new LibroExcepcion("Hubo un problema para traer los libros activos.");
+        }
+    
+    }
+    
+    @Transactional
+    public Libro buscarPorId(String id) throws LibroExcepcion {
+        
+        Optional<Libro> respuesta = libroRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            return respuesta.get();
+        } else {
+            throw new LibroExcepcion("No se ha encontrado el libro solicitado.");
+        }
+        
+    }
+    
+    @Transactional
+    public void darBaja(String id) throws LibroExcepcion {
+        
+        Optional<Libro> respuesta = libroRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Libro libro = respuesta.get();
+            libro.setAlta(false);
+            libroRepositorio.save(libro);
+        } else {
+            throw new LibroExcepcion("No se ha encontrado el libro solicitado.");
+        }
+        
+    }
+    
+    
+    
     @Transactional
     public void cargar(
             String isbn,
