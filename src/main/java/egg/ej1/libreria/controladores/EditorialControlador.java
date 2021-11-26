@@ -6,7 +6,7 @@
 package egg.ej1.libreria.controladores;
 
 import egg.ej1.libreria.entidades.Editorial;
-import egg.ej1.libreria.repositorios.EditorialRepositorio;
+import egg.ej1.libreria.excepciones.EditorialExcepcion;
 import egg.ej1.libreria.servicios.EditorialServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +29,16 @@ public class EditorialControlador {
     @Autowired
     EditorialServicio editorialServicio;
 
-    @Autowired
-    EditorialRepositorio editorialRepositorio;
-
     @GetMapping("/")
     public String listarEditoriales(
             ModelMap model) {
 
-        List<Editorial> editoriales = editorialRepositorio.findAllActive();
-        model.put("editoriales", editoriales);
+        try {
+            List<Editorial> editoriales = editorialServicio.listarActivos();
+            model.put("editoriales", editoriales);
+        } catch (EditorialExcepcion e) {
+            model.put("error", "error: " + e.getMessage());
+        }
 
         return "editorial.html";
     }
@@ -47,11 +48,13 @@ public class EditorialControlador {
             @RequestParam String nombre,
             ModelMap model) {
 
-        editorialServicio.cargar(
-                nombre);
-
-        List<Editorial> editoriales = editorialRepositorio.findAll();
-        model.put("editoriales", editoriales);
+        try {
+            editorialServicio.cargar(nombre);
+            List<Editorial> editoriales = editorialServicio.listarActivos();
+            model.put("editoriales", editoriales);
+        } catch (EditorialExcepcion e) {
+            model.put("error", "error" + e.getMessage());
+        }
 
         return "redirect:";
     }
@@ -61,11 +64,14 @@ public class EditorialControlador {
             @PathVariable("idEditorial") String id,
             ModelMap model) {
 
-        List<Editorial> editoriales = editorialRepositorio.findAllActive();
-        model.put("editoriales", editoriales);
-
-        Editorial e = editorialRepositorio.getById(id);
-        model.put("editorial", e);
+        try {
+            List<Editorial> editoriales = editorialServicio.listarActivos();
+            model.put("editoriales", editoriales);
+            Editorial e = editorialServicio.buscarPorId(id);
+            model.put("editorial", e);
+        } catch (EditorialExcepcion e) {
+            model.put("error", "error: " + e.getMessage());
+        }
 
         return "editorialEditar.html";
     }
@@ -77,14 +83,15 @@ public class EditorialControlador {
             ModelMap model
     ) {
 
-        editorialServicio.modificar(id, nombre);
-
-        List<Editorial> editoriales = editorialRepositorio.findAll();
-        model.put("editoriales", editoriales);
-
-        Editorial e = editorialRepositorio.getById(id);
-
-        model.put("editorial", e);
+        try {
+            editorialServicio.modificar(id, nombre);
+            List<Editorial> editoriales = editorialServicio.listarActivos();
+            model.put("editoriales", editoriales);
+            Editorial e = editorialServicio.buscarPorId(id);
+            model.put("editorial", e);
+        } catch (EditorialExcepcion e) {
+            model.put("error", "error: " + e.getMessage());
+        }
 
         return "redirect:";
 
@@ -92,13 +99,15 @@ public class EditorialControlador {
 
     @GetMapping("/{idEditorial}/eliminar")
     public String eliminarEditorial(
-            @PathVariable("idEditorial") String id
+            @PathVariable("idEditorial") String id,
+            ModelMap model
     ) {
-        Editorial l = editorialRepositorio.getById(id);
-        l.setAlta(Boolean.FALSE);
-
-        editorialRepositorio.save(l);
-
+        
+        try {
+            editorialServicio.darBaja(id);
+        } catch (EditorialExcepcion e) {
+            model.put("error", "error: " + e.getMessage());
+        }
         return "redirect:/editoriales/";
 
     }

@@ -8,9 +8,11 @@ package egg.ej1.libreria.controladores;
 import egg.ej1.libreria.entidades.Autor;
 import egg.ej1.libreria.entidades.Editorial;
 import egg.ej1.libreria.entidades.Libro;
+import egg.ej1.libreria.excepciones.AutorExcepcion;
+import egg.ej1.libreria.excepciones.EditorialExcepcion;
 import egg.ej1.libreria.excepciones.LibroExcepcion;
-import egg.ej1.libreria.repositorios.AutorRepositorio;
-import egg.ej1.libreria.repositorios.EditorialRepositorio;
+import egg.ej1.libreria.servicios.AutorServicio;
+import egg.ej1.libreria.servicios.EditorialServicio;
 import egg.ej1.libreria.servicios.LibroServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +42,10 @@ public class LibroControlador {
     private LibroServicio libroServicio;
 
     @Autowired
-    private AutorRepositorio autorRepositorio;
+    private AutorServicio autorServicio;
 
     @Autowired
-    private EditorialRepositorio editorialRepositorio;
+    private EditorialServicio editorialServicio;
 
     @GetMapping("/")
     public String listarLibros(
@@ -52,18 +54,13 @@ public class LibroControlador {
         try {
             List<Libro> libros = libroServicio.listarActivos();
             model.put("libros", libros);
-
-        } catch (LibroExcepcion e) {
-
+            List<Autor> autores = autorServicio.listarActivos();
+            model.put("autores", autores);
+            List<Editorial> editoriales = editorialServicio.listarActivos();
+            model.put("editoriales", editoriales);
+        } catch (LibroExcepcion | AutorExcepcion | EditorialExcepcion e) {
             model.put("error", "Error: " + e.getMessage());
-
         }
-
-        List<Autor> autores = autorRepositorio.findAll();
-        model.put("autores", autores);
-
-        List<Editorial> editoriales = editorialRepositorio.findAll();
-        model.put("editoriales", editoriales);
 
         return "libro.html";
     }
@@ -89,15 +86,15 @@ public class LibroControlador {
         try {
             List<Libro> libros = libroServicio.listarActivos();
             model.put("libros", libros);
-        } catch (LibroExcepcion e) {
+            List<Autor> autores = autorServicio.listarActivos();
+            model.put("autores", autores);
+            List<Editorial> editoriales = editorialServicio.listarActivos();
+            model.put("editoriales", editoriales);
+        } catch (LibroExcepcion | AutorExcepcion | EditorialExcepcion e) {
 
             model.put("error", "Error:" + e.getMessage());
         }
 
-        List<Autor> autores = autorRepositorio.findAll();
-        model.put("autores", autores);
-        List<Editorial> editoriales = editorialRepositorio.findAll();
-        model.put("editoriales", editoriales);
         return "redirect:";
 
     }

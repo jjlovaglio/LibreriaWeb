@@ -6,7 +6,7 @@
 package egg.ej1.libreria.controladores;
 
 import egg.ej1.libreria.entidades.Autor;
-import egg.ej1.libreria.repositorios.AutorRepositorio;
+import egg.ej1.libreria.excepciones.AutorExcepcion;
 import egg.ej1.libreria.servicios.AutorServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +29,16 @@ public class AutorControlador {
     @Autowired
     AutorServicio autorServicio;
 
-    @Autowired
-    AutorRepositorio autorRepositorio;
-
     @GetMapping("/")
     public String listarAutores(
             ModelMap model) {
 
-        List<Autor> autores = autorRepositorio.findAllActive();
-        model.put("autores", autores);
+        try {
+            List<Autor> autores = autorServicio.listarActivos();
+            model.put("autores", autores);
+        } catch (AutorExcepcion e) {
+            model.put("error", "Error: " + e.getMessage());
+        }
 
         return "autor.html";
     }
@@ -47,11 +48,13 @@ public class AutorControlador {
             @RequestParam String nombre,
             ModelMap model) {
 
-        autorServicio.cargar(
-                nombre);
-
-        List<Autor> autores = autorRepositorio.findAll();
-        model.put("autores", autores);
+        try {
+            autorServicio.cargar(nombre);
+            List<Autor> autores = autorServicio.listarActivos();
+            model.put("autores", autores);
+        } catch (AutorExcepcion e) {
+            model.put("error", "Error: " + e.getMessage());
+        }
 
         return "redirect:";
     }
@@ -61,11 +64,14 @@ public class AutorControlador {
             @PathVariable("idAutor") String id,
             ModelMap model) {
 
-        List<Autor> autores = autorRepositorio.findAllActive();
-        model.put("autores", autores);
-
-        Autor a = autorRepositorio.getById(id);
-        model.put("autor", a);
+        try {
+            List<Autor> autores = autorServicio.listarActivos();
+            model.put("autores", autores);
+            Autor a = autorServicio.buscarPorId(id);
+            model.put("autor", a);
+        } catch (AutorExcepcion e) {
+            model.put("error", "Error: " + e.getMessage());
+        }
 
         return "autorEditar.html";
     }
@@ -77,14 +83,15 @@ public class AutorControlador {
             ModelMap model
     ) {
 
-        autorServicio.modificar(id, nombre);
-
-        List<Autor> autores = autorRepositorio.findAll();
-        model.put("autores", autores);
-
-        Autor a = autorRepositorio.getById(id);
-
-        model.put("autor", a);
+        try {
+            autorServicio.modificar(id, nombre);
+            List<Autor> autores = autorServicio.listarActivos();
+            model.put("autores", autores);
+            Autor a = autorServicio.buscarPorId(id);
+            model.put("autor", a);
+        } catch (AutorExcepcion e) {
+            model.put("error", "error: " + e.getMessage());
+        }
 
         return "redirect:";
 
@@ -92,12 +99,15 @@ public class AutorControlador {
 
     @GetMapping("/{idAutor}/eliminar")
     public String eliminarAutor(
-            @PathVariable("idAutor") String id
+            @PathVariable("idAutor") String id, 
+            ModelMap model
     ) {
-        Autor l = autorRepositorio.getById(id);
-        l.setAlta(Boolean.FALSE);
 
-        autorRepositorio.save(l);
+        try {
+            autorServicio.darBaja(id);
+        } catch (AutorExcepcion e) {
+            model.put("error", "error: " + e.getMessage());
+        }
 
         return "redirect:/autores/";
 
