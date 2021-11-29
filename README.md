@@ -10,18 +10,20 @@ En la aplicación, se puede crear, leer, modificar, y dar de baja (CRUD) en una 
 
 Esta ejercitación forma parte del curso de FullStack Developer de EGG + Gobierno de Mendoza 2021.
 
-Tecnologías y Software Utilizado:
-Java: 1.8.0_291, Java HotSpot(TM) 64-Bit Server VM 25.291-b10
-Spring Boot v2.5.6
-MySQL Community v8.0.26.0
-Bootstrap
-IDE's Apache NetBeans IDE 12.0
-Visual Studio Code v1.62.2
-MySQL Workbench v8.0.26
-Dependencias Maven:
-Spring Boot DevTools
-Spring Web
-Thymeleaf
-Spring Security
-Spring Data JPA
-MySQL Driver
+</br>
+
+#### Tecnologías y Software Utilizado:
+* Java: 1.8.0_291, Java HotSpot(TM) 64-Bit Server VM 25.291-b10
+* Spring Boot v2.5.6
+* MySQL Community v8.0.26.0
+* Bootstrap
+* IDE's Apache NetBeans IDE 12.0
+* Visual Studio Code v1.62.2
+* MySQL Workbench v8.0.26
+##### Dependencias Maven:
+* Spring Boot DevTools
+* Spring Web
+* Thymeleaf
+* Spring Security
+* Spring Data JPA
+* MySQL Driver
