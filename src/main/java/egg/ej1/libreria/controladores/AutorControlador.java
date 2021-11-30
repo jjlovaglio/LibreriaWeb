@@ -50,13 +50,14 @@ public class AutorControlador {
 
         try {
             autorServicio.cargar(nombre);
+            model.put("exito", "Autor cargado con éxito!");
             List<Autor> autores = autorServicio.listarActivos();
             model.put("autores", autores);
         } catch (AutorExcepcion e) {
             model.put("error", "Error: " + e.getMessage());
         }
 
-        return "redirect:";
+        return "autor";
     }
 
     @GetMapping("/{idAutor}")

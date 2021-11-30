@@ -1,8 +1,7 @@
 /*
-
 todo: implementar TDD <articlulo>
-todo: implementar manejo de excepciones (video YT tinder de mascotas)
-todo: devolver feedback de errores al usuario (videos YT tinder Mascotas)
+ok: implementar manejo de excepciones (video YT tinder de mascotas)
+ok: devolver feedback de errores al usuario (videos YT tinder Mascotas)
 todo: ver anidado de plantillas HTML en Tymeleaf
 todo: repasar curso de Tymeleaf (clase en drive)
 todo: repasar curso de relaciones entre entidades (clase en drive)

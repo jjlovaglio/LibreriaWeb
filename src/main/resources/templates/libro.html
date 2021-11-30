@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -19,6 +19,18 @@
             <br/>
             <br/>
             <div class="row text-center">
+                <div th:if="${exito} != null" class="card text-white bg-success mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">¡Éxito!</h5>
+                            <p class="card-text" th:text="${exito}"></p>
+                        </div>
+                    </div>
+                <div th:if="${error} != null" class="card text-white bg-danger mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">¡Ups!</h5>
+                        <p class="card-text" th:text="${error}"></p>
+                    </div>
+                </div>
                 <div class="col">
 
                     <a th:href="@{/libros/}" class="btn btn-outline-primary">Administrar Libros</a>

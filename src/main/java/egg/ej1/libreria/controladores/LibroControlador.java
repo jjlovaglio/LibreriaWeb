@@ -75,15 +75,18 @@ public class LibroControlador {
             @RequestParam String idEditorial,
             ModelMap model) {
 
-        libroServicio.cargar(
-                isbn,
-                titulo,
-                anio,
-                ejemplares,
-                idAutor,
-                idEditorial);
-
         try {
+            
+            libroServicio.cargar(
+                    isbn,
+                    titulo,
+                    anio,
+                    ejemplares,
+                    idAutor,
+                    idEditorial);
+
+            model.put("exito", "Libro añadido con éxito!");
+            
             List<Libro> libros = libroServicio.listarActivos();
             model.put("libros", libros);
             List<Autor> autores = autorServicio.listarActivos();
@@ -95,7 +98,7 @@ public class LibroControlador {
             model.put("error", "Error:" + e.getMessage());
         }
 
-        return "redirect:";
+        return "libro";
 
     }
 

@@ -50,13 +50,14 @@ public class EditorialControlador {
 
         try {
             editorialServicio.cargar(nombre);
+            model.put("exito", "Editorial cargada con éxito!");
             List<Editorial> editoriales = editorialServicio.listarActivos();
             model.put("editoriales", editoriales);
         } catch (EditorialExcepcion e) {
             model.put("error", "error" + e.getMessage());
         }
 
-        return "redirect:";
+        return "editorial";
     }
 
     @GetMapping("/{idEditorial}")
